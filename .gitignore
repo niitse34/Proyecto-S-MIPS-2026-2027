@@ -1,0 +1,5 @@
+# Directorio de trabajo del arnes local (volcados de MARS e imagenes de prueba)
+.work/
+.cache/
+__pycache__/
+*.pyc

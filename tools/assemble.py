@@ -10,7 +10,8 @@ import argparse
 import os
 import subprocess
 import sys
-import tempfile
+
+from arnes import directorio_trabajo
 
 ROOT = Path(__file__).resolve().parent.parent
 MARS = os.environ.get('MARS_JAR', str(Path.home()/'Apps/mars/Mars4_5.jar'))
@@ -44,7 +45,7 @@ def main():
     parser.add_argument('-o', '--salida', type=Path)
     args = parser.parse_args()
     salida = args.salida or ROOT/'images'/(args.fuente.stem + '.hex')
-    with tempfile.TemporaryDirectory(prefix='smips-mars-') as directory:
+    with directorio_trabajo('smips-mars-') as directory:
         texto_hex, datos_hex = Path(directory)/'text.hex', Path(directory)/'data.hex'
         result = subprocess.run([JAVA, '-jar', MARS, 'nc', 'mc', 'CompactTextAtZero', 'a',
                                  'dump', '.text', 'HexText', str(texto_hex),

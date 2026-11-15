@@ -11,7 +11,8 @@ import argparse
 import os
 import subprocess
 import sys
-import tempfile
+
+from arnes import classpath, directorio_trabajo, opciones_java
 
 ROOT = Path(__file__).resolve().parent.parent
 HERE = ROOT/'tools'
@@ -34,7 +35,7 @@ def main():
     parser.add_argument('fuentes', type=Path, nargs='*')
     args = parser.parse_args()
     fuentes = args.fuentes or sorted((ROOT/'programs').glob('*.asm')) + sorted((ROOT/'tests').glob('*.asm'))
-    with tempfile.TemporaryDirectory(prefix='smips-probar-') as directorio:
+    with directorio_trabajo('smips-probar-') as directorio:
         directorio = Path(directorio)
         imagenes, esperado = {}, {}
         for fuente in fuentes:
@@ -46,8 +47,9 @@ def main():
             imagenes[str(imagen)] = fuente
             esperado[fuente] = normalizar(mars.stdout)
         print(f'Ejecutando {len(fuentes)} programas en la placa...', flush=True)
-        orden = [JAVA, f'-Djava.util.prefs.userRoot={directorio}/prefs', '--class-path', JAR,
-                 str(HERE/'Run.java'), str(args.circuito.resolve()), str(CICLOS_MAX), '0', *imagenes]
+        orden = [JAVA, *opciones_java(), f'-Djava.util.prefs.userRoot={directorio}/prefs',
+                 '--class-path', classpath(JAR), str(HERE/'Run.java'),
+                 str(args.circuito.resolve()), str(CICLOS_MAX), '0', *imagenes]
         # Cada programa se informa en cuanto termina (la cosimulacion es lenta).
         proceso = subprocess.Popen(orden, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         resultados, fallos = [], 0
