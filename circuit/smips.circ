@@ -1336,19 +1336,19 @@
     </comp>
     <comp lib="0" loc="(260,190)" name="Pin">
       <a name="appearance" val="classic"/>
-      <a name="label" val="a1"/>
+      <a name="label" val="rs_i1"/>
       <a name="radix" val="10signed"/>
       <a name="width" val="5"/>
     </comp>
     <comp lib="0" loc="(260,230)" name="Pin">
       <a name="appearance" val="classic"/>
-      <a name="label" val="a2"/>
+      <a name="label" val="rs_i2"/>
       <a name="radix" val="10signed"/>
       <a name="width" val="5"/>
     </comp>
     <comp lib="0" loc="(260,270)" name="Pin">
       <a name="appearance" val="classic"/>
-      <a name="label" val="a3"/>
+      <a name="label" val="rs_dt"/>
       <a name="radix" val="10signed"/>
       <a name="width" val="5"/>
     </comp>
