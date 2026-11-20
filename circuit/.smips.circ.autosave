@@ -14,9 +14,9 @@
   <lib desc="#Memory" name="5"/>
   <lib desc="#I/O" name="6"/>
   <lib desc="#Base" name="7"/>
-  <lib desc="file#Branch_Control.circ" name="8"/>
-  <lib desc="file#inmediate_splitter.circ" name="9"/>
-  <lib desc="file#PROGRAM_COUNTER.circ" name="10"/>
+  <lib desc="file#inmediate_splitter.circ" name="8"/>
+  <lib desc="file#PROGRAM_COUNTER.circ" name="9"/>
+  <lib desc="file#Branch_Control.circ" name="10"/>
   <main name="Board"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -2507,4 +2507,98 @@
     <wire from="(990,880)" to="(990,890)"/>
     <wire from="(990,890)" to="(1000,890)"/>
   </circuit>
+  <vhdl appearance="logisim_evolution" name="Instruction_Decoder">library ieee;&#13;
+use ieee.std_logic_1164.all;&#13;
+&#13;
+-- Instruction_Decoder: purely combinational decode of OP/FUNCT.&#13;
+-- CLASS    : instruction class (selects the control sequence downstream); "11111" = illegal&#13;
+-- ALU_OP   : 000 add, 001 sub, 010 and, 011 or, 100 slt, 101 sll, 110 srl&#13;
+-- EXT_MODE : immediate extension: 00 none, 01 sign, 10 zero, 11 upper (lui: imm &lt;&lt; 16)&#13;
+entity Instruction_Decoder is&#13;
+  port (&#13;
+    OP       : in  std_logic_vector(5 downto 0);&#13;
+    FUNCT    : in  std_logic_vector(5 downto 0);&#13;
+    CLASS    : out std_logic_vector(4 downto 0);&#13;
+    ALU_OP   : out std_logic_vector(2 downto 0);&#13;
+    EXT_MODE : out std_logic_vector(1 downto 0);&#13;
+    ILLEGAL  : out std_logic&#13;
+  );&#13;
+end entity Instruction_Decoder;&#13;
+&#13;
+architecture combinational of Instruction_Decoder is&#13;
+begin&#13;
+  process (OP, FUNCT)&#13;
+  begin&#13;
+    -- Safe defaults: any unlisted encoding is flagged illegal (also prevents latches)&#13;
+    CLASS    &lt;= "11111";&#13;
+    ALU_OP   &lt;= "000";&#13;
+    EXT_MODE &lt;= "00";&#13;
+    ILLEGAL  &lt;= '1';&#13;
+&#13;
+    if OP = "000000" then&#13;
+      -- R-type: the operation is selected by FUNCT&#13;
+      case FUNCT is&#13;
+        when "100000" =&gt;  -- add&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "100001" =&gt;  -- addu&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "100010" =&gt;  -- sub&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "001"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "100100" =&gt;  -- and&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "010"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "100101" =&gt;  -- or&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "011"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "101010" =&gt;  -- slt&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "100"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "000000" =&gt;  -- sll (all-zero word = nop = sll $0,$0,0)&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "101"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "000010" =&gt;  -- srl&#13;
+          CLASS &lt;= "00000"; ALU_OP &lt;= "110"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "001000" =&gt;  -- jr (own class: PC &lt;- rs)&#13;
+          CLASS &lt;= "01111"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "001100" =&gt;  -- syscall&#13;
+          CLASS &lt;= "10000"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when others =&gt;    -- unknown FUNCT: keep the illegal defaults&#13;
+          null;&#13;
+      end case;&#13;
+    else&#13;
+      -- I-type / J-type: the operation is selected by OP&#13;
+      case OP is&#13;
+        when "001000" =&gt;  -- addi  (sign-extended imm)&#13;
+          CLASS &lt;= "00001"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "001001" =&gt;  -- addiu (sign-extended imm)&#13;
+          CLASS &lt;= "00001"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "001010" =&gt;  -- slti  (sign-extended imm, ALU does slt)&#13;
+          CLASS &lt;= "00010"; ALU_OP &lt;= "100"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "001100" =&gt;  -- andi  (zero-extended imm)&#13;
+          CLASS &lt;= "00011"; ALU_OP &lt;= "010"; EXT_MODE &lt;= "10"; ILLEGAL &lt;= '0';&#13;
+        when "001101" =&gt;  -- ori   (zero-extended imm)&#13;
+          CLASS &lt;= "00100"; ALU_OP &lt;= "011"; EXT_MODE &lt;= "10"; ILLEGAL &lt;= '0';&#13;
+        when "001111" =&gt;  -- lui   (imm &lt;&lt; 16)&#13;
+          CLASS &lt;= "00101"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "11"; ILLEGAL &lt;= '0';&#13;
+        when "100011" =&gt;  -- lw    (address = rs + sign-ext imm)&#13;
+          CLASS &lt;= "00110"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "101011" =&gt;  -- sw&#13;
+          CLASS &lt;= "00111"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "100000" =&gt;  -- lb&#13;
+          CLASS &lt;= "01000"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "100100" =&gt;  -- lbu&#13;
+          CLASS &lt;= "01001"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "101000" =&gt;  -- sb&#13;
+          CLASS &lt;= "01010"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "000100" =&gt;  -- beq   (ALU subtracts to compare; offset sign-extended)&#13;
+          CLASS &lt;= "01011"; ALU_OP &lt;= "001"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "000101" =&gt;  -- bne&#13;
+          CLASS &lt;= "01100"; ALU_OP &lt;= "001"; EXT_MODE &lt;= "01"; ILLEGAL &lt;= '0';&#13;
+        when "000010" =&gt;  -- j     (26-bit target, no immediate extension)&#13;
+          CLASS &lt;= "01101"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when "000011" =&gt;  -- jal&#13;
+          CLASS &lt;= "01110"; ALU_OP &lt;= "000"; EXT_MODE &lt;= "00"; ILLEGAL &lt;= '0';&#13;
+        when others =&gt;    -- unknown OP: keep the illegal defaults&#13;
+          null;&#13;
+      end case;&#13;
+    end if;&#13;
+  end process;&#13;
+end architecture combinational;&#13;
+</vhdl>
 </project>
