@@ -185,7 +185,7 @@
     </comp>
     <comp lib="7" loc="(560,70)" name="Text">
       <a name="font" val="SansSerif plain 13"/>
-      <a name="text" val="No modificar: la CPU se implementa dentro del subcircuito CPU."/>
+      <a name="text" val="Do not modify: the CPU is implemented inside the CPU subcircuit."/>
     </comp>
     <comp loc="(400,140)" name="CPU"/>
     <comp loc="(960,140)" name="Memory"/>
@@ -220,6 +220,7 @@
   <circuit name="CPU">
     <a name="appearance" val="custom"/>
     <a name="circuit" val="CPU"/>
+    <a name="simulationFrequency" val="1.0"/>
     <appear>
       <rect fill="none" height="280" stroke="#000000" stroke-width="2" width="220" x="50" y="50"/>
       <text dominant-baseline="central" font-family="SansSerif" font-size="16" font-weight="bold" text-anchor="middle" x="160" y="190">CPU</text>
@@ -234,17 +235,197 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="end" x="265" y="270">TTY_WE</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="end" x="265" y="310">HALT</text>
       <circ-anchor facing="east" x="50" y="50"/>
+      <circ-port dir="in" pin="200,300" x="50" y="150"/>
       <circ-port dir="in" pin="230,140" x="50" y="70"/>
       <circ-port dir="in" pin="230,190" x="50" y="110"/>
-      <circ-port dir="in" pin="230,240" x="50" y="150"/>
-      <circ-port dir="out" pin="900,140" x="270" y="70"/>
-      <circ-port dir="out" pin="900,240" x="270" y="110"/>
-      <circ-port dir="out" pin="900,340" x="270" y="150"/>
-      <circ-port dir="out" pin="900,390" x="270" y="190"/>
-      <circ-port dir="out" pin="900,440" x="270" y="230"/>
-      <circ-port dir="out" pin="900,490" x="270" y="270"/>
-      <circ-port dir="out" pin="900,540" x="270" y="310"/>
+      <circ-port dir="out" pin="860,270" x="270" y="70"/>
+      <circ-port dir="out" pin="860,370" x="270" y="110"/>
+      <circ-port dir="out" pin="860,470" x="270" y="150"/>
+      <circ-port dir="out" pin="860,520" x="270" y="190"/>
+      <circ-port dir="out" pin="860,570" x="270" y="230"/>
+      <circ-port dir="out" pin="860,620" x="270" y="270"/>
+      <circ-port dir="out" pin="860,670" x="270" y="310"/>
     </appear>
+    <comp lib="0" loc="(110,730)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(1100,810)" name="Tunnel">
+      <a name="label" val="TAKE_BRANCH"/>
+    </comp>
+    <comp lib="0" loc="(1100,850)" name="Tunnel">
+      <a name="label" val="PC_EN"/>
+    </comp>
+    <comp lib="0" loc="(120,770)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="SYS_PRINT"/>
+    </comp>
+    <comp lib="0" loc="(1260,420)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="REG_DST"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1270,380)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ALU_CTRL"/>
+      <a name="width" val="3"/>
+    </comp>
+    <comp lib="0" loc="(1280,340)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ALU_SRC_A"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1280,500)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="EXT_MODE"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1290,300)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="SYS_RD"/>
+    </comp>
+    <comp lib="0" loc="(1290,460)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MEM_BYTE"/>
+    </comp>
+    <comp lib="0" loc="(130,690)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ILLEGAL"/>
+    </comp>
+    <comp lib="0" loc="(1300,260)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PC_SRC"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1310,180)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(1310,220)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="IR_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(1390,790)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="OP"/>
+      <a name="width" val="6"/>
+    </comp>
+    <comp lib="0" loc="(1390,830)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="FUNCT"/>
+      <a name="width" val="6"/>
+    </comp>
+    <comp lib="0" loc="(1450,160)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(1450,200)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MEM_RDATA"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(1450,240)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PC_EN"/>
+    </comp>
+    <comp lib="0" loc="(1450,280)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ADDR_SEL"/>
+    </comp>
+    <comp lib="0" loc="(1450,320)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="AB_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(1450,360)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ALU_SRC_B"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1450,400)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="REG_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(1450,440)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="WB_SEL"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1450,480)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="LB_SIGN"/>
+    </comp>
+    <comp lib="0" loc="(1680,810)" name="Tunnel">
+      <a name="label" val="ALU_OP"/>
+      <a name="width" val="3"/>
+    </comp>
+    <comp lib="0" loc="(1680,850)" name="Tunnel">
+      <a name="label" val="ILLEGAL"/>
+    </comp>
+    <comp lib="0" loc="(1710,160)" name="Tunnel">
+      <a name="label" val="MEM_ADDR"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(1710,200)" name="Tunnel">
+      <a name="label" val="MEM_BE"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(1710,240)" name="Tunnel">
+      <a name="label" val="ZERO"/>
+    </comp>
+    <comp lib="0" loc="(1710,280)" name="Tunnel">
+      <a name="label" val="FUNCT"/>
+      <a name="width" val="6"/>
+    </comp>
+    <comp lib="0" loc="(1710,320)" name="Tunnel">
+      <a name="label" val="SYS_PRINT"/>
+    </comp>
+    <comp lib="0" loc="(1770,830)" name="Tunnel">
+      <a name="label" val="EXT_MODE"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(1790,790)" name="Tunnel">
+      <a name="label" val="CLASS"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(1830,180)" name="Tunnel">
+      <a name="label" val="MEM_WDATA"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(1840,220)" name="Tunnel">
+      <a name="label" val="TTY_DATA"/>
+      <a name="width" val="7"/>
+    </comp>
+    <comp lib="0" loc="(1850,300)" name="Tunnel">
+      <a name="label" val="SYS_EXIT"/>
+    </comp>
+    <comp lib="0" loc="(1880,260)" name="Tunnel">
+      <a name="label" val="OP"/>
+      <a name="width" val="6"/>
+    </comp>
+    <comp lib="0" loc="(200,300)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="MEM_RDATA"/>
+      <a name="labelfont" val="SansSerif plain 12"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(210,670)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(210,710)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLASS"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(210,750)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="SYS_EXIT"/>
+    </comp>
+    <comp lib="0" loc="(210,790)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ALU_OP"/>
+      <a name="width" val="3"/>
+    </comp>
     <comp lib="0" loc="(230,140)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="label" val="CLK"/>
@@ -255,13 +436,128 @@
       <a name="label" val="RESET"/>
       <a name="labelfont" val="SansSerif plain 12"/>
     </comp>
-    <comp lib="0" loc="(230,240)" name="Pin">
-      <a name="appearance" val="classic"/>
+    <comp lib="0" loc="(260,140)" name="Tunnel">
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(260,190)" name="Tunnel">
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(350,300)" name="Tunnel">
       <a name="label" val="MEM_RDATA"/>
-      <a name="labelfont" val="SansSerif plain 12"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(900,140)" name="Pin">
+    <comp lib="0" loc="(470,1030)" name="Tunnel">
+      <a name="label" val="WB_SEL"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(470,670)" name="Tunnel">
+      <a name="label" val="ADDR_SEL"/>
+    </comp>
+    <comp lib="0" loc="(470,710)" name="Tunnel">
+      <a name="label" val="PC_SRC"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(470,750)" name="Tunnel">
+      <a name="label" val="AB_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(470,790)" name="Tunnel">
+      <a name="label" val="SYS_RD"/>
+    </comp>
+    <comp lib="0" loc="(470,830)" name="Tunnel">
+      <a name="label" val="LB_SIGN"/>
+    </comp>
+    <comp lib="0" loc="(470,870)" name="Tunnel">
+      <a name="label" val="REG_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(470,910)" name="Tunnel">
+      <a name="label" val="ALU_SRC_B"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(470,950)" name="Tunnel">
+      <a name="label" val="BR_NE"/>
+    </comp>
+    <comp lib="0" loc="(470,990)" name="Tunnel">
+      <a name="label" val="ALU_CTRL"/>
+      <a name="width" val="3"/>
+    </comp>
+    <comp lib="0" loc="(580,690)" name="Tunnel">
+      <a name="label" val="IR_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(580,730)" name="Tunnel">
+      <a name="label" val="MEM_WE"/>
+    </comp>
+    <comp lib="0" loc="(580,770)" name="Tunnel">
+      <a name="label" val="MEM_BYTE"/>
+    </comp>
+    <comp lib="0" loc="(590,810)" name="Tunnel">
+      <a name="label" val="ALU_SRC_A"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(590,850)" name="Tunnel">
+      <a name="label" val="PC_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(600,1010)" name="Tunnel">
+      <a name="label" val="REG_DST"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="0" loc="(600,930)" name="Tunnel">
+      <a name="label" val="TTY_WE"/>
+    </comp>
+    <comp lib="0" loc="(610,890)" name="Tunnel">
+      <a name="label" val="BR_EQ"/>
+    </comp>
+    <comp lib="0" loc="(610,970)" name="Tunnel">
+      <a name="label" val="HALT"/>
+    </comp>
+    <comp lib="0" loc="(820,770)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="BR_EQ"/>
+    </comp>
+    <comp lib="0" loc="(820,810)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="BR_NE"/>
+    </comp>
+    <comp lib="0" loc="(820,850)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ZERO"/>
+    </comp>
+    <comp lib="0" loc="(820,890)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PC_WRITE"/>
+    </comp>
+    <comp lib="0" loc="(830,270)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MEM_ADDR"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(830,370)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MEM_WDATA"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(830,470)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MEM_BE"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(830,520)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MEM_WE"/>
+    </comp>
+    <comp lib="0" loc="(830,570)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="TTY_DATA"/>
+      <a name="width" val="7"/>
+    </comp>
+    <comp lib="0" loc="(830,620)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="TTY_WE"/>
+    </comp>
+    <comp lib="0" loc="(830,670)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="HALT"/>
+    </comp>
+    <comp lib="0" loc="(860,270)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="MEM_ADDR"/>
@@ -270,7 +566,7 @@
       <a name="type" val="output"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(900,240)" name="Pin">
+    <comp lib="0" loc="(860,370)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="MEM_WDATA"/>
@@ -279,7 +575,7 @@
       <a name="type" val="output"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(900,340)" name="Pin">
+    <comp lib="0" loc="(860,470)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="MEM_BE"/>
@@ -288,7 +584,7 @@
       <a name="type" val="output"/>
       <a name="width" val="4"/>
     </comp>
-    <comp lib="0" loc="(900,390)" name="Pin">
+    <comp lib="0" loc="(860,520)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="MEM_WE"/>
@@ -296,7 +592,7 @@
       <a name="labelloc" val="east"/>
       <a name="type" val="output"/>
     </comp>
-    <comp lib="0" loc="(900,440)" name="Pin">
+    <comp lib="0" loc="(860,570)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="TTY_DATA"/>
@@ -305,7 +601,7 @@
       <a name="type" val="output"/>
       <a name="width" val="7"/>
     </comp>
-    <comp lib="0" loc="(900,490)" name="Pin">
+    <comp lib="0" loc="(860,620)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="TTY_WE"/>
@@ -313,7 +609,7 @@
       <a name="labelloc" val="east"/>
       <a name="type" val="output"/>
     </comp>
-    <comp lib="0" loc="(900,540)" name="Pin">
+    <comp lib="0" loc="(860,670)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
       <a name="label" val="HALT"/>
@@ -321,14 +617,116 @@
       <a name="labelloc" val="east"/>
       <a name="type" val="output"/>
     </comp>
-    <comp lib="7" loc="(500,40)" name="Text">
-      <a name="font" val="SansSerif bold 20"/>
-      <a name="text" val="CPU S-MIPS: implementar aqui"/>
+    <comp lib="7" loc="(1480,90)" name="Text">
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="text" val="Datapath"/>
     </comp>
-    <comp lib="7" loc="(500,65)" name="Text">
+    <comp lib="7" loc="(1560,710)" name="Text">
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="text" val="Instruction_Decoder"/>
+    </comp>
+    <comp lib="7" loc="(863,128)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="No cambiar nombres, anchos ni sentido de los pines: la placa depende de ellos."/>
+      <a name="text" val="All connections are tunnels named after their signal (CLK, RESET, PC_EN, ZERO, CLASS, ...)"/>
     </comp>
+    <comp lib="7" loc="(889,206)" name="Text">
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="text" val="Control_Unit (FSM)"/>
+    </comp>
+    <comp lib="7" loc="(936,52)" name="Text">
+      <a name="font" val="SansSerif bold 20"/>
+      <a name="text" val="CPU S-MIPS"/>
+    </comp>
+    <comp lib="7" loc="(977,703)" name="Text">
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="text" val="Branch_Control"/>
+    </comp>
+    <comp loc="(1480,140)" name="Datapath"/>
+    <comp loc="(1630,790)" name="Instruction_Decoder"/>
+    <comp loc="(240,650)" name="Control_Unit"/>
+    <comp loc="(850,750)" name="Branch_Control"/>
+    <wire from="(1070,810)" to="(1100,810)"/>
+    <wire from="(1070,850)" to="(1100,850)"/>
+    <wire from="(110,730)" to="(240,730)"/>
+    <wire from="(120,770)" to="(240,770)"/>
+    <wire from="(1260,420)" to="(1480,420)"/>
+    <wire from="(1270,380)" to="(1480,380)"/>
+    <wire from="(1280,340)" to="(1480,340)"/>
+    <wire from="(1280,500)" to="(1480,500)"/>
+    <wire from="(1290,300)" to="(1480,300)"/>
+    <wire from="(1290,460)" to="(1480,460)"/>
+    <wire from="(130,690)" to="(240,690)"/>
+    <wire from="(1300,260)" to="(1480,260)"/>
+    <wire from="(1310,180)" to="(1480,180)"/>
+    <wire from="(1310,220)" to="(1480,220)"/>
+    <wire from="(1390,790)" to="(1410,790)"/>
+    <wire from="(1390,830)" to="(1410,830)"/>
+    <wire from="(1410,790)" to="(1420,790)"/>
+    <wire from="(1410,810)" to="(1410,830)"/>
+    <wire from="(1410,810)" to="(1420,810)"/>
+    <wire from="(1450,160)" to="(1480,160)"/>
+    <wire from="(1450,200)" to="(1480,200)"/>
+    <wire from="(1450,240)" to="(1480,240)"/>
+    <wire from="(1450,280)" to="(1480,280)"/>
+    <wire from="(1450,320)" to="(1480,320)"/>
+    <wire from="(1450,360)" to="(1480,360)"/>
+    <wire from="(1450,400)" to="(1480,400)"/>
+    <wire from="(1450,440)" to="(1480,440)"/>
+    <wire from="(1450,480)" to="(1480,480)"/>
+    <wire from="(1620,790)" to="(1630,790)"/>
+    <wire from="(1620,810)" to="(1630,810)"/>
+    <wire from="(1620,830)" to="(1630,830)"/>
+    <wire from="(1620,850)" to="(1630,850)"/>
+    <wire from="(1630,790)" to="(1790,790)"/>
+    <wire from="(1630,810)" to="(1680,810)"/>
+    <wire from="(1630,830)" to="(1770,830)"/>
+    <wire from="(1630,850)" to="(1680,850)"/>
+    <wire from="(1680,160)" to="(1710,160)"/>
+    <wire from="(1680,180)" to="(1830,180)"/>
+    <wire from="(1680,200)" to="(1710,200)"/>
+    <wire from="(1680,220)" to="(1840,220)"/>
+    <wire from="(1680,240)" to="(1710,240)"/>
+    <wire from="(1680,260)" to="(1880,260)"/>
+    <wire from="(1680,280)" to="(1710,280)"/>
+    <wire from="(1680,300)" to="(1850,300)"/>
+    <wire from="(1680,320)" to="(1710,320)"/>
+    <wire from="(200,300)" to="(350,300)"/>
+    <wire from="(210,670)" to="(240,670)"/>
+    <wire from="(210,710)" to="(240,710)"/>
+    <wire from="(210,750)" to="(240,750)"/>
+    <wire from="(210,790)" to="(240,790)"/>
+    <wire from="(230,140)" to="(260,140)"/>
+    <wire from="(230,190)" to="(260,190)"/>
+    <wire from="(440,1010)" to="(600,1010)"/>
+    <wire from="(440,1030)" to="(470,1030)"/>
+    <wire from="(440,670)" to="(470,670)"/>
+    <wire from="(440,690)" to="(580,690)"/>
+    <wire from="(440,710)" to="(470,710)"/>
+    <wire from="(440,730)" to="(580,730)"/>
+    <wire from="(440,750)" to="(470,750)"/>
+    <wire from="(440,770)" to="(580,770)"/>
+    <wire from="(440,790)" to="(470,790)"/>
+    <wire from="(440,810)" to="(590,810)"/>
+    <wire from="(440,830)" to="(470,830)"/>
+    <wire from="(440,850)" to="(590,850)"/>
+    <wire from="(440,870)" to="(470,870)"/>
+    <wire from="(440,890)" to="(610,890)"/>
+    <wire from="(440,910)" to="(470,910)"/>
+    <wire from="(440,930)" to="(600,930)"/>
+    <wire from="(440,950)" to="(470,950)"/>
+    <wire from="(440,970)" to="(610,970)"/>
+    <wire from="(440,990)" to="(470,990)"/>
+    <wire from="(820,770)" to="(850,770)"/>
+    <wire from="(820,810)" to="(850,810)"/>
+    <wire from="(820,850)" to="(850,850)"/>
+    <wire from="(820,890)" to="(850,890)"/>
+    <wire from="(830,270)" to="(860,270)"/>
+    <wire from="(830,370)" to="(860,370)"/>
+    <wire from="(830,470)" to="(860,470)"/>
+    <wire from="(830,520)" to="(860,520)"/>
+    <wire from="(830,570)" to="(860,570)"/>
+    <wire from="(830,620)" to="(860,620)"/>
+    <wire from="(830,670)" to="(860,670)"/>
   </circuit>
   <circuit name="Memory">
     <a name="appearance" val="custom"/>
@@ -569,7 +967,7 @@
     </comp>
     <comp lib="7" loc="(480,70)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
-      <a name="text" val="Se usan los bits 13..2 de ADDR; los demas se ignoran (el espacio se repite cada 16 KiB)."/>
+      <a name="text" val="Bits 13..2 of ADDR are used; the rest are ignored (the space repeats every 16 KiB)."/>
     </comp>
     <wire from="(190,140)" to="(220,140)"/>
     <wire from="(190,190)" to="(220,190)"/>
@@ -995,9 +1393,68 @@
     <wire from="(90,580)" to="(90,600)"/>
   </circuit>
   <circuit name="Datapath">
-    <a name="appearance" val="logisim_evolution"/>
+    <a name="appearance" val="custom"/>
     <a name="circuit" val="Datapath"/>
     <a name="simulationFrequency" val="1.0"/>
+    <appear>
+      <rect fill="none" height="400" stroke="#000000" stroke-width="2" width="200" x="50" y="50"/>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="14" font-weight="bold" text-anchor="middle" x="150" y="250">Datapath</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="70">CLK</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="90">RESET</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="110">MEM_RDATA</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="130">IR_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="150">PC_EN</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="170">PC_SRC</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="190">ADDR_SEL</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="210">SYS_RD</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="230">AB_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="250">ALU_SRC_A</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="270">ALU_SRC_B</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="290">ALU_CTRL</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="310">REG_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="330">REG_DST</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="350">WB_SEL</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="370">MEM_BYTE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="390">LB_SIGN</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="410">EXT_MODE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="70">MEM_ADDR</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="90">MEM_WDATA</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="110">MEM_BE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="130">TTY_DATA</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="150">ZERO</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="170">OP</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="190">FUNCT</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="210">SYS_EXIT</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="230">SYS_PRINT</text>
+      <circ-anchor facing="east" x="50" y="50"/>
+      <circ-port dir="in" pin="200,1020" x="50" y="390"/>
+      <circ-port dir="in" pin="200,1070" x="50" y="410"/>
+      <circ-port dir="in" pin="200,160" x="50" y="70"/>
+      <circ-port dir="in" pin="200,210" x="50" y="90"/>
+      <circ-port dir="in" pin="200,290" x="50" y="110"/>
+      <circ-port dir="in" pin="200,370" x="50" y="130"/>
+      <circ-port dir="in" pin="200,420" x="50" y="150"/>
+      <circ-port dir="in" pin="200,470" x="50" y="170"/>
+      <circ-port dir="in" pin="200,520" x="50" y="190"/>
+      <circ-port dir="in" pin="200,570" x="50" y="210"/>
+      <circ-port dir="in" pin="200,620" x="50" y="230"/>
+      <circ-port dir="in" pin="200,670" x="50" y="250"/>
+      <circ-port dir="in" pin="200,720" x="50" y="270"/>
+      <circ-port dir="in" pin="200,770" x="50" y="290"/>
+      <circ-port dir="in" pin="200,820" x="50" y="310"/>
+      <circ-port dir="in" pin="200,870" x="50" y="330"/>
+      <circ-port dir="in" pin="200,920" x="50" y="350"/>
+      <circ-port dir="in" pin="200,970" x="50" y="370"/>
+      <circ-port dir="out" pin="4280,210" x="250" y="70"/>
+      <circ-port dir="out" pin="4280,310" x="250" y="90"/>
+      <circ-port dir="out" pin="4280,390" x="250" y="110"/>
+      <circ-port dir="out" pin="4280,440" x="250" y="130"/>
+      <circ-port dir="out" pin="4280,490" x="250" y="150"/>
+      <circ-port dir="out" pin="4280,540" x="250" y="170"/>
+      <circ-port dir="out" pin="4280,590" x="250" y="190"/>
+      <circ-port dir="out" pin="4280,640" x="250" y="210"/>
+      <circ-port dir="out" pin="4280,690" x="250" y="230"/>
+    </appear>
     <comp lib="0" loc="(1150,1030)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="READ_REG1"/>
@@ -2433,7 +2890,7 @@
     <comp lib="7" loc="(2520,80)" name="Text">
       <a name="text" val="4. ALU"/>
     </comp>
-    <comp lib="7" loc="(2561,823)" name="Text">
+    <comp lib="7" loc="(2560,820)" name="Text">
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="ALU_OUT"/>
     </comp>
@@ -5167,10 +5624,67 @@
     <wire from="(990,890)" to="(1000,890)"/>
   </circuit>
   <circuit name="Control_Unit">
-    <a name="appearance" val="logisim_evolution"/>
+    <a name="appearance" val="custom"/>
     <a name="circuit" val="Control_Unit"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
+    <appear>
+      <rect fill="none" height="420" stroke="#000000" stroke-width="2" width="200" x="50" y="50"/>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="14" font-weight="bold" text-anchor="middle" x="150" y="260">Control_Unit</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="70">CLK</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="90">ILLEGAL</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="110">CLASS</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="130">RESET</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="150">SYS_EXIT</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="170">SYS_PRINT</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="start" x="55" y="190">ALU_OP</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="70">ADDR_SEL</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="90">IR_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="110">PC_SRC</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="130">MEM_WE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="150">AB_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="170">MEM_BYTE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="190">SYS_RD</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="210">ALU_SRC_A</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="230">LB_SIGN</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="250">PC_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="270">REG_WRITE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="290">BR_EQ</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="310">ALU_SRC_B</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="330">TTY_WE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="350">BR_NE</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="370">HALT</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="390">ALU_CTRL</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="410">REG_DST</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="430">WB_SEL</text>
+      <circ-anchor facing="east" x="50" y="50"/>
+      <circ-port dir="in" pin="260,210" x="50" y="110"/>
+      <circ-port dir="in" pin="260,340" x="50" y="190"/>
+      <circ-port dir="in" pin="570,180" x="50" y="90"/>
+      <circ-port dir="in" pin="570,220" x="50" y="150"/>
+      <circ-port dir="in" pin="570,260" x="50" y="170"/>
+      <circ-port dir="in" pin="90,180" x="50" y="70"/>
+      <circ-port dir="in" pin="90,220" x="50" y="130"/>
+      <circ-port dir="out" pin="3630,1020" x="250" y="330"/>
+      <circ-port dir="out" pin="3630,820" x="250" y="70"/>
+      <circ-port dir="out" pin="3630,860" x="250" y="130"/>
+      <circ-port dir="out" pin="3630,900" x="250" y="170"/>
+      <circ-port dir="out" pin="3630,940" x="250" y="230"/>
+      <circ-port dir="out" pin="3630,980" x="250" y="270"/>
+      <circ-port dir="out" pin="3730,1060" x="250" y="370"/>
+      <circ-port dir="out" pin="3790,1260" x="250" y="390"/>
+      <circ-port dir="out" pin="3790,1340" x="250" y="410"/>
+      <circ-port dir="out" pin="3790,1420" x="250" y="430"/>
+      <circ-port dir="out" pin="3880,1020" x="250" y="350"/>
+      <circ-port dir="out" pin="3880,820" x="250" y="90"/>
+      <circ-port dir="out" pin="3880,860" x="250" y="150"/>
+      <circ-port dir="out" pin="3880,900" x="250" y="190"/>
+      <circ-port dir="out" pin="3880,940" x="250" y="250"/>
+      <circ-port dir="out" pin="3880,980" x="250" y="290"/>
+      <circ-port dir="out" pin="4170,1010" x="250" y="310"/>
+      <circ-port dir="out" pin="4170,850" x="250" y="110"/>
+      <circ-port dir="out" pin="4170,930" x="250" y="210"/>
+    </appear>
     <comp lib="0" loc="(1000,1060)" name="Tunnel">
       <a name="label" val="L100"/>
       <a name="labelfont" val="SansSerif bold 9"/>
