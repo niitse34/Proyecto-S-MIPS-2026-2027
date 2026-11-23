@@ -52,7 +52,7 @@
     <a name="simulationFrequency" val="1.0"/>
     <comp lib="0" loc="(120,160)" name="Clock">
       <a name="appearance" val="classic"/>
-      <a name="label" val="Reloj"/>
+      <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(1210,160)" name="Tunnel">
       <a name="label" val="MEM_RDATA"/>
@@ -234,9 +234,9 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="end" x="265" y="230">TTY_DATA</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="end" x="265" y="270">TTY_WE</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="end" x="265" y="310">HALT</text>
+      <circ-port dir="in" pin="230,140" x="50" y="70"/>
       <circ-anchor facing="east" x="50" y="50"/>
       <circ-port dir="in" pin="200,300" x="50" y="150"/>
-      <circ-port dir="in" pin="230,140" x="50" y="70"/>
       <circ-port dir="in" pin="230,190" x="50" y="110"/>
       <circ-port dir="out" pin="860,270" x="270" y="70"/>
       <circ-port dir="out" pin="860,370" x="270" y="110"/>
@@ -426,15 +426,14 @@
       <a name="label" val="ALU_OP"/>
       <a name="width" val="3"/>
     </comp>
-    <comp lib="0" loc="(230,140)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="label" val="CLK"/>
-      <a name="labelfont" val="SansSerif plain 12"/>
-    </comp>
     <comp lib="0" loc="(230,190)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="label" val="RESET"/>
       <a name="labelfont" val="SansSerif plain 12"/>
+    </comp>
+    <comp lib="0" loc="(230,140)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(260,140)" name="Tunnel">
       <a name="label" val="CLK"/>
@@ -641,6 +640,7 @@
       <a name="font" val="SansSerif bold 14"/>
       <a name="text" val="Branch_Control"/>
     </comp>
+    <comp loc="(1420,770)" name="Instruction_Decoder"/>
     <comp loc="(1480,140)" name="Datapath"/>
     <comp loc="(240,650)" name="Control_Unit"/>
     <comp loc="(850,750)" name="Branch_Control"/>
@@ -689,8 +689,9 @@
     <wire from="(210,710)" to="(240,710)"/>
     <wire from="(210,750)" to="(240,750)"/>
     <wire from="(210,790)" to="(240,790)"/>
-    <wire from="(230,140)" to="(260,140)"/>
+    <wire from="(230,140)" to="(240,140)"/>
     <wire from="(230,190)" to="(260,190)"/>
+    <wire from="(240,140)" to="(260,140)"/>
     <wire from="(440,1010)" to="(600,1010)"/>
     <wire from="(440,1030)" to="(470,1030)"/>
     <wire from="(440,670)" to="(470,670)"/>
@@ -735,8 +736,8 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="start" x="55" y="190">BE</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="start" x="55" y="230">WE</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="11" text-anchor="end" x="265" y="70">RDATA</text>
-      <circ-anchor facing="east" x="50" y="50"/>
       <circ-port dir="in" pin="190,140" x="50" y="70"/>
+      <circ-anchor facing="east" x="50" y="50"/>
       <circ-port dir="in" pin="190,190" x="50" y="110"/>
       <circ-port dir="in" pin="190,290" x="50" y="150"/>
       <circ-port dir="in" pin="190,390" x="50" y="190"/>
@@ -747,11 +748,6 @@
       <a name="label" val="RDATA"/>
       <a name="labelfont" val="SansSerif plain 12"/>
       <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(190,140)" name="Pin">
-      <a name="appearance" val="classic"/>
-      <a name="label" val="CLK"/>
-      <a name="labelfont" val="SansSerif plain 12"/>
     </comp>
     <comp lib="0" loc="(190,190)" name="Pin">
       <a name="appearance" val="classic"/>
@@ -775,6 +771,10 @@
       <a name="appearance" val="classic"/>
       <a name="label" val="WE"/>
       <a name="labelfont" val="SansSerif plain 12"/>
+    </comp>
+    <comp lib="0" loc="(190,140)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(220,140)" name="Tunnel">
       <a name="label" val="CLK"/>
@@ -963,11 +963,12 @@
       <a name="font" val="SansSerif plain 12"/>
       <a name="text" val="Bits 13..2 of ADDR are used; the rest are ignored (the space repeats every 16 KiB)."/>
     </comp>
-    <wire from="(190,140)" to="(220,140)"/>
+    <wire from="(190,140)" to="(200,140)"/>
     <wire from="(190,190)" to="(220,190)"/>
     <wire from="(190,290)" to="(220,290)"/>
     <wire from="(190,390)" to="(220,390)"/>
     <wire from="(190,440)" to="(220,440)"/>
+    <wire from="(200,140)" to="(220,140)"/>
     <wire from="(250,520)" to="(280,520)"/>
     <wire from="(250,640)" to="(280,640)"/>
     <wire from="(280,860)" to="(310,860)"/>
@@ -1420,10 +1421,10 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="190">FUNCT</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="210">SYS_EXIT</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="230">SYS_PRINT</text>
+      <circ-port dir="in" pin="200,160" x="50" y="70"/>
       <circ-anchor facing="east" x="50" y="50"/>
       <circ-port dir="in" pin="200,1020" x="50" y="390"/>
       <circ-port dir="in" pin="200,1070" x="50" y="410"/>
-      <circ-port dir="in" pin="200,160" x="50" y="70"/>
       <circ-port dir="in" pin="200,210" x="50" y="90"/>
       <circ-port dir="in" pin="200,290" x="50" y="110"/>
       <circ-port dir="in" pin="200,370" x="50" y="130"/>
@@ -4217,7 +4218,7 @@
     </comp>
     <comp lib="0" loc="(290,510)" name="Pin">
       <a name="appearance" val="classic"/>
-      <a name="label" val="clk"/>
+      <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(290,560)" name="Pin">
       <a name="appearance" val="classic"/>
@@ -5651,13 +5652,13 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="390">ALU_CTRL</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="410">REG_DST</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="10" text-anchor="end" x="245" y="430">WB_SEL</text>
+      <circ-port dir="in" pin="90,180" x="50" y="70"/>
       <circ-anchor facing="east" x="50" y="50"/>
       <circ-port dir="in" pin="260,210" x="50" y="110"/>
       <circ-port dir="in" pin="260,340" x="50" y="190"/>
       <circ-port dir="in" pin="570,180" x="50" y="90"/>
       <circ-port dir="in" pin="570,220" x="50" y="150"/>
       <circ-port dir="in" pin="570,260" x="50" y="170"/>
-      <circ-port dir="in" pin="90,180" x="50" y="70"/>
       <circ-port dir="in" pin="90,220" x="50" y="130"/>
       <circ-port dir="out" pin="3630,1020" x="250" y="330"/>
       <circ-port dir="out" pin="3630,820" x="250" y="70"/>
@@ -8457,7 +8458,7 @@
     </comp>
     <comp lib="0" loc="(200,240)" name="Pin">
       <a name="appearance" val="classic"/>
-      <a name="label" val="clk"/>
+      <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(200,280)" name="Pin">
       <a name="appearance" val="classic"/>
