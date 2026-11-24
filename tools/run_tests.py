@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ejecuta programas en la CPU de circuit/smips.circ y compara la salida del TTY con la de MARS.
 
-Uso: python3 tools/run_tests.py [--circuito archivo.circ] [fuente.asm ...]
+Uso: python3 tools/run_tests.py [--circuito archivo.circ] [--max-ciclos N] [--traza N] [--no-vhdl] [fuente.asm ...]
 Sin fuentes prueba programs/*.asm y tests/*.asm. Necesita Java 21, MARS (MARS_JAR),
 Logisim Evolution 5.0.0 (LOGISIM_JAR) y, solo si la CPU tiene entidades VHDL, Questa con licencia
 (QUESTA_BIN, SALT_LICENSE_SERVER).
@@ -19,7 +19,9 @@ HERE = ROOT/'tools'
 JAR = os.environ.get('LOGISIM_JAR', '/snap/logisim-evolution-snapcraft/current/jar/logisim-evolution.jar')
 MARS = os.environ.get('MARS_JAR', str(Path.home()/'Apps/mars/Mars4_5.jar'))
 JAVA = os.environ.get('JAVA', 'java')
-CICLOS_MAX = 60000  # con 4-5 ciclos por instruccion, el programa mas largo usa unos 8000
+CICLOS_MAX = int(os.environ.get('SMIPS_MAX_CYCLES', '60000'))  # con 4-5 ciclos por instruccion, el programa mas largo usa unos 8000
+TRACE = int(os.environ.get('SMIPS_TRACE', '0'))  # nivel de traza: 0=sin traza, N=primeros N ciclos
+NO_VHDL = os.environ.get('SMIPS_NO_VHDL', '0') == '1'  # deshabilitar VHDL
 
 
 def normalizar(texto):
@@ -32,6 +34,9 @@ def normalizar(texto):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--circuito', type=Path, default=ROOT/'circuit/smips.circ')
+    parser.add_argument('--max-ciclos', type=int, default=CICLOS_MAX)
+    parser.add_argument('--traza', type=int, default=TRACE)
+    parser.add_argument('--no-vhdl', action='store_true', default=NO_VHDL)
     parser.add_argument('fuentes', type=Path, nargs='*')
     args = parser.parse_args()
     fuentes = args.fuentes or sorted((ROOT/'programs').glob('*.asm')) + sorted((ROOT/'tests').glob('*.asm'))
@@ -49,7 +54,9 @@ def main():
         print(f'Ejecutando {len(fuentes)} programas en la placa...', flush=True)
         orden = [JAVA, *opciones_java(), f'-Djava.util.prefs.userRoot={directorio}/prefs',
                  '--class-path', classpath(JAR), str(HERE/'Run.java'),
-                 str(args.circuito.resolve()), str(CICLOS_MAX), '0', *imagenes]
+                 str(args.circuito.resolve()), str(args.max_ciclos), str(args.traza), *imagenes]
+        if NO_VHDL:
+            orden.append('--no-vhdl')
         # Cada programa se informa en cuanto termina (la cosimulacion es lenta).
         proceso = subprocess.Popen(orden, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         resultados, fallos = [], 0

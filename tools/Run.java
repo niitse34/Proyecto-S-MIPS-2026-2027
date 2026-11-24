@@ -118,10 +118,22 @@ class Run {
   }
   public static void main(String[] args) {
     try {
-      initialize(args[0]);
-      int max = Integer.parseInt(args[1]), trace = Integer.parseInt(args[2]);
-      for (int i = 3; i < args.length; i++) run(args[i], max, trace);
-      if (vhdl) {
+      boolean noVhdl = false;
+      List<String> positional = new ArrayList<>();
+      for (String arg : args) {
+        if (arg.equals("--no-vhdl")) {
+          noVhdl = true;
+        } else {
+          positional.add(arg);
+        }
+      }
+      if (positional.size() < 3) {
+        throw new IllegalArgumentException("Usage: Run circuit cycles trace [images...] [--no-vhdl]");
+      }
+      initialize(positional.get(0));
+      int max = Integer.parseInt(positional.get(1)), trace = Integer.parseInt(positional.get(2));
+      for (int i = 3; i < positional.size(); i++) run(positional.get(i), max, trace);
+      if (vhdl && !noVhdl) {
         String log = consola();
         if (log.contains("** Error")) System.out.println("CONSOLA_VHDL\n" + log);
         project.getVhdlSimulator().disable();

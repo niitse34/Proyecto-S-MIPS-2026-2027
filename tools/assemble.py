@@ -14,7 +14,7 @@ import sys
 from arnes import directorio_trabajo
 
 ROOT = Path(__file__).resolve().parent.parent
-MARS = os.environ.get('MARS_JAR', str(Path.home()/'Apps/mars/Mars4_5.jar'))
+MARS = os.environ.get('MARS_JAR', r"C:\Users\Naisy de la Caridad\Documents\GitHub\Proyecto-S-MIPS-2026-2027\Mars4_5.jar")
 JAVA = os.environ.get('JAVA', 'java')
 INICIO_DATOS = 0x2000
 

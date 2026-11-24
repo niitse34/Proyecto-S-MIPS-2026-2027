@@ -1,0 +1,26 @@
+Repository: C:\Users\Naisy de la Caridad\Documents\GitHub\Proyecto-S-MIPS-2026-2027
+MARS: C:\Users\Naisy de la Caridad\Documents\GitHub\Proyecto-S-MIPS-2026-2027\Mars4_5.jar
+Logisim: C:\Program Files\logisim-evolution\app\logisim-evolution-5.0.0-all.jar
+Java: C:\Program Files\Common Files\Oracle\Java\javapath\java.exe
+Python: C:\Users\Naisy de la Caridad\AppData\Local\Programs\Python\Python314\python.exe
+Ejecutando 18 programas en la placa...
+OK    programs\arithmetic.asm  (6791 ciclos)
+OK    programs\array_sum.asm  (933 ciclos)
+OK    programs\branches.asm  (914 ciclos)
+OK    programs\gcd.asm  (2955 ciclos)
+OK    programs\hello.asm  (295 ciclos)
+OK    programs\memory.asm  (5162 ciclos)
+OK    programs\multiply.asm  (2032 ciclos)
+OK    tests\01_alu_and_zero.asm  (274 ciclos)
+OK    tests\01_bitwise_imm.asm  (1689 ciclos)
+OK    tests\02_memory_bytes.asm  (162 ciclos)
+OK    tests\03_control_flow.asm  (120 ciclos)
+OK    tests\03_linear_search.asm  (409 ciclos)
+OK    tests\06_binary_search.asm  (527 ciclos)
+OK    tests\07_fibonacci_dp.asm  (933 ciclos)
+OK    tests\08_array_stats.asm  (1693 ciclos)
+OK    tests\08_recursive_factorial.asm  (991 ciclos)
+OK    tests\09_recursive_sum.asm  (1754 ciclos)
+OK    tests\99_instruction_coverage.asm  (507 ciclos)
+
+18/18 correctos

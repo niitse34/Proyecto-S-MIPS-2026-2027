@@ -50,7 +50,6 @@ main:   addi $s0, $zero, 1000        # s0 = 0x000003e8
         move $a0, $s1                # MARS genera addu
         jal  imprimir_hex
         add  $zero, $s0, $s0         # escribir en $zero no tiene efecto
-        nop
         add  $a0, $zero, $zero
         jal  imprimir_hex
         jal  nueva_linea
