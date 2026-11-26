@@ -43,14 +43,14 @@ function Resolve-DependencyFile {
                 }
             }
         }
-        throw "$Name does not exist at: $Override"
+        Write-Warning "$Name override does not exist at '$Override'; searching standard locations instead."
     }
     foreach ($candidate in $Candidates) {
         if ($candidate -and (Test-Path -LiteralPath $candidate -PathType Leaf)) {
             return (Resolve-Path -LiteralPath $candidate).Path
         }
     }
-    throw "Could not find $Name. Set its environment variable or install it in a searched location."
+    throw "Could not find $Name. Set its environment variable to a valid file or install it in a searched location."
 }
 
 $marsCandidates = @(
